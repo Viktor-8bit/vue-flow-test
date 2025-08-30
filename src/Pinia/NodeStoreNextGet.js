@@ -207,8 +207,8 @@ export const useNodeD3ForceStore = defineStore('nodeStoreD3Force', () => {
         }
     ]
 
-    const width = 1000;
-    const height = 1000;
+    const width = 928;
+    const height = 50;
 
     // Specify the color scale.
     const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -224,7 +224,7 @@ export const useNodeD3ForceStore = defineStore('nodeStoreD3Force', () => {
     const svg = d3.create("svg")
         .attr("width", width)
         .attr("height", height)
-        .attr("viewBox", [0, 0, width, height])
+        .attr("viewBox", [10, 10, width, height])
         .attr("style", "max-width: 100%; height: auto;");
 
     // Add a line for each link, and a circle for each node.

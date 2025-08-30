@@ -68,7 +68,7 @@ const nodesUpdated = (nodes) => {
           id: nod.id,
           type: 'device',
           data: { name: "аааа" },
-          position: { x: nod.x, y: nod.y },
+          position: { x: nod.x * 8, y: nod.y * 8 },
         }
     )
   })
@@ -357,7 +357,7 @@ onMounted(() => {
         .attr("cx", d => d.x)
         .attr("cy", d => d.y);
   }
-  container.append(svg.node());
+  // container.append(svg.node());
 })
 
 
