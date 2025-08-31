@@ -6,6 +6,9 @@ import * as d3 from "d3";
 
 export const useNodeD3ForceStore = defineStore('nodeStoreD3Force', () => {
 
+    const simulationEnded = ref(false)
+    const simulationProgress = ref(0.0)
+
     let nodes = [
         {
             id: "Myriel",
@@ -214,17 +217,21 @@ export const useNodeD3ForceStore = defineStore('nodeStoreD3Force', () => {
     const color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // Create a simulation with several forces.
-    const simulation = d3.forceSimulation([...nodes])
-        .force("link", d3.forceLink([...links]).id(d => d.id))
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id))
         .force("charge", d3.forceManyBody())
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .on("tick", ticked);
+        .on("tick", ticked)
+        .on("end", () => {
+            simulationEnded.value = true
+            console.log("Симуляция завершена!");
+        });;
 
     // Create the SVG container.
     const svg = d3.create("svg")
         .attr("width", width)
         .attr("height", height)
-        .attr("viewBox", [10, 10, width, height])
+        .attr("viewBox", [0, 0, width, height])
         .attr("style", "max-width: 100%; height: auto;");
 
     // Add a line for each link, and a circle for each node.
@@ -260,16 +267,18 @@ export const useNodeD3ForceStore = defineStore('nodeStoreD3Force', () => {
         node
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
+
+        const alpha = simulation.alpha();
+        simulationProgress.value = (1 - (alpha - simulation.alphaMin()) / (1 - simulation.alphaMin())) * 100
     }
 
 
-    // 53: {id: 'Mlle.Vaubois', group: 5, index: 53, x: 465.48437459952765, y: 765.2410716885491, …}
-
-    console.log(links)
 
     return {
         nodes,
+        simulationProgress,
         links,
+        simulationEnded,
         svg
     }
 })
