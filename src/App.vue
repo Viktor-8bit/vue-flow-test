@@ -27,16 +27,6 @@ onInit((vueFlowInstance) => {
   vueFlowInstance.fitView()
 })
 
-
-// const updatedNodes = computed(() => node3DForce?.nodes.map(nod => (
-//     {
-//       id: nod.id,
-//       type: 'device',
-//       data: { name: "аааа" },
-//       position: { x: nod.x * 8, y: nod.y * 8 }
-//     }
-// )))
-
 const updatedNodes = ref(node3DForce?.nodes.map(nod => (
     {
       id: nod.id,
@@ -54,6 +44,13 @@ const updatedEdges = computed(() => node3DForce?.links.map(edg => (
     }
 )))
 
+
+const { onNodeClick } = useVueFlow()
+
+
+onNodeClick(({node}) => {
+  console.log("нода: ", node, + " выбрана")
+})
 
 function toggleDarkMode() {
   dark.value = !dark.value
@@ -92,7 +89,7 @@ onMounted(() => {
     >
 
       <template #node-device="props" >
-        <DeviceNode :id="props.id" :data="props.data" />
+        <DeviceNode :id="props.id" :data="props.data" :selected="props.selected" />
       </template>
 
       <template #node-interface="props">
@@ -118,3 +115,8 @@ onMounted(() => {
     <UProgress v-else v-model="node3DForce.simulationProgress" />
 
 </template>
+
+
+<style scoped>
+
+</style>

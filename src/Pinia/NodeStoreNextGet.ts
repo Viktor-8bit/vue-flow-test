@@ -1,5 +1,5 @@
 ﻿import {defineStore} from "pinia";
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 import * as d3 from "d3";
 

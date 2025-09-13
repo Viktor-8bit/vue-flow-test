@@ -6,6 +6,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  selected: {
+    type: Boolean,
+    required: false,
+  },
   data: {
     type: Object,
     required: true,
@@ -18,7 +22,7 @@ const { updateNodeData, getConnectedEdges } = useVueFlow()
 </script>
 
 <template>
-  <div class="nodeCard">
+  <div :class="props.selected == true ? 'nodeCard selected' : 'nodeCard' "> <!--  -->
 
     <Handle id="a" type="source" :position="Position.Top" />
 
@@ -33,7 +37,6 @@ const { updateNodeData, getConnectedEdges } = useVueFlow()
 </template>
 
 <style scoped>
-
   .nodeCard {
     min-width: 100px;
     padding: 10px;
@@ -42,4 +45,11 @@ const { updateNodeData, getConnectedEdges } = useVueFlow()
     border-radius: 3px;
   }
 
+  .nodeCard.selected {
+    min-width: 100px;
+    padding: 10px;
+    background: #fff;
+    border: 0.1rem #32b61f solid;
+    border-radius: 3px;
+  }
 </style>
